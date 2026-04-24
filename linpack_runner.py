@@ -4,6 +4,7 @@ import time
 import shutil
 import sys
 
+#huk
 def run_linpack_test(N, work_dir='.'):
     """
     Кроссплатформенный аналог scr1.sh.
