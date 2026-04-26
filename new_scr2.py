@@ -3,14 +3,13 @@ import sys
 import shutil
 import subprocess
 from predict_1200 import main_1200
+from linpack_runner import run_linpack_test  # наш новый модуль
 
 def main(N):
     N_list = get_from_manager(N)
     for i in N_list:
-        if sys.platform.startswith('win'):
-            print(f"Тест для N={i} невозможен на Windows (требуется bash). Пропускаем.")
-        else:
-            subprocess.run(['bash', 'scr1.sh', str(i)], check=True)
+        # Вместо старого условия теперь всегда запускаем кроссплатформенный вариант
+        run_linpack_test(i, work_dir='.')  # work_dir — папка, где лежит mylinpack.c и paint_plot.py
 
     if 1000 in N_list:
         main_1200(N_list)
@@ -25,10 +24,10 @@ def get_from_manager(N):
 
 if __name__ == '__main__':
     N = sys.argv[1]
-    print('in new_scr=', N[0])  # оставляем как есть
+    print('in new_scr=', N[0])
     main(N)
 
-    # Копирование результатов
+    # Копирование результатов (без изменений)
     src = 'results'
     dst = os.path.abspath(os.path.join('..', '..', 'visual', '3_test'))
     if os.path.exists(src):
@@ -41,6 +40,8 @@ if __name__ == '__main__':
             else:
                 shutil.copy2(s, d)
 
-    # Удаление бинарника
-    if os.path.exists('mylinpack_64'):
-        os.remove('mylinpack_64')
+    # if os.path.exists('mylinpack_64'):
+    #     os.remove('mylinpack_64')
+    #  для Windows не забываем удалить .exe, если был
+    # if os.path.exists('mylinpack_64.exe'):
+    #     os.remove('mylinpack_64.exe')
