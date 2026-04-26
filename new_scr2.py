@@ -44,4 +44,4 @@ if __name__ == '__main__':
     #     os.remove('mylinpack_64')
     #  для Windows не забываем удалить .exe, если был
     # if os.path.exists('mylinpack_64.exe'):
-    #     os.remove('mylinpack_64.exe')                                                         #kkлл
+    #     os.remove('mylinpack_64.exe')                                                         #kkллkk
